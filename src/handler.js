@@ -1,30 +1,30 @@
 const { nanoid } = require('nanoid')
 const books = require('./books')
 const addBookHandler = (request, h) => {
-  const { name, year, author, summary, publisher, pageCount, readPage, reading } = request.payload;
+  const { name, year, author, summary, publisher, pageCount, readPage, reading } = request.payload
 
   if (!name) {
     const response = h.response({
       status: 'fail',
       message: 'Gagal menambahkan buku. Mohon isi nama buku'
-    });
-    response.code(400);
-    return response;
+    })
+    response.code(400)
+    return response
   }
 
   if (readPage > pageCount) {
     const response = h.response({
       status: 'fail',
       message: 'Gagal menambahkan buku. readPage tidak boleh lebih besar dari pageCount'
-    });
-    response.code(400);
-    return response;
+    })
+    response.code(400)
+    return response
   }
 
-  const id = nanoid(16);
-  const insertedAt = new Date().toISOString();
-  const updatedAt = insertedAt;
-  const finished = pageCount === readPage;
+  const id = nanoid(16)
+  const insertedAt = new Date().toISOString()
+  const updatedAt = insertedAt
+  const finished = pageCount === readPage
 
   const newBook = {
     id,
@@ -39,11 +39,11 @@ const addBookHandler = (request, h) => {
     reading,
     insertedAt,
     updatedAt
-  };
+  }
 
-  books.push(newBook);
+  books.push(newBook)
 
-  const isSuccess = books.filter((book) => book.id === id).length > 0;
+  const isSuccess = books.filter((book) => book.id === id).length > 0
 
   if (isSuccess) {
     const response = h.response({
@@ -52,40 +52,40 @@ const addBookHandler = (request, h) => {
       data: {
         bookId: id
       }
-    });
-    response.code(201);
-    return response;
+    })
+    response.code(201)
+    return response
   }
 
   const response = h.response({
     status: 'fail',
     message: 'Buku gagal ditambahkan'
-  });
-  response.code(500);
-  return response;
-};
+  })
+  response.code(500)
+  return response
+}
 
 const getAllBooksHandler = () => {
   const booksSummary = books.map(book => ({
     id: book.id,
     name: book.name,
     publisher: book.publisher
-  }));
+  }))
 
   return {
     status: 'success',
     data: {
       books: booksSummary
     }
-  };
-};
+  }
+}
 
-const getbookByIdHandler = (request, h) => {
-  const { id } = request.params
+const getBookByIdHandler = (request, h) => {
+  const { bookId } = request.params
 
-  const book = books.filter((n) => n.id === id)[0]
+  const book = books.find((b) => b.id === bookId)
 
-  if (book !== undefined) {
+  if (book) {
     return {
       status: 'success',
       data: {
@@ -96,7 +96,7 @@ const getbookByIdHandler = (request, h) => {
 
   const response = h.response({
     status: 'fail',
-    message: 'Catatan tidak ditemukan'
+    message: 'Buku tidak ditemukan'
   })
   response.code(404)
   return response
