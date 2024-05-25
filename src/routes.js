@@ -1,16 +1,16 @@
 const {
-  addNoteHandler,
+  addbookHandler,
   getAllbooksHandler,
-  getNoteByIdHandler,
-  editNoteByIdHandler,
-  deleteNoteByIdHandler,
+  getbookByIdHandler,
+  editbookByIdHandler,
+  deletebookByIdHandler,
 } = require('./handler');
 
 const routes = [
   {
     method: 'POST',
     path: '/books',
-    handler: addNoteHandler,
+    handler: addbookHandler,
   },
   {
     method: 'GET',
@@ -20,17 +20,17 @@ const routes = [
   {
     method: 'GET',
     path: '/books/{id}',
-    handler: getNoteByIdHandler,
+    handler: getbookByIdHandler,
   },
   {
     method: 'PUT',
     path: '/books/{id}',
-    handler: editNoteByIdHandler,
+    handler: editbookByIdHandler,
   },
   {
     method: 'DELETE',
     path: '/books/{id}',
-    handler: deleteNoteByIdHandler,
+    handler: deletebookByIdHandler,
   },
 ];
 

@@ -1,21 +1,21 @@
 const { nanoid } = require('nanoid')
 const books = require('./books')
-const addNoteHandler = (request, h) => {
+const addbookHandler = (request, h) => {
   const { title, tags, body } = request.payload
   const id = nanoid(16)
   const createdAt = new Date().toISOString()
   const updatedAt = createdAt
-  const newNote = {
+  const newbook = {
     title, tags, body, id, createdAt, updatedAt
   }
-  books.push(newNote)
-  const isSuccess = books.filter((note) => note.id === id).length > 0
+  books.push(newbook)
+  const isSuccess = books.filter((book) => book.id === id).length > 0
   if (isSuccess) {
     const response = h.response({
       status: 'success',
       message: 'Catatan berhasil ditambahkan',
       data: {
-        noteId: id
+        bookId: id
       }
     })
     response.code(201)
@@ -36,16 +36,16 @@ const getAllbooksHandler = () => ({
   }
 })
 
-const getNoteByIdHandler = (request, h) => {
+const getbookByIdHandler = (request, h) => {
   const { id } = request.params
 
-  const note = books.filter((n) => n.id === id)[0]
+  const book = books.filter((n) => n.id === id)[0]
 
-  if (note !== undefined) {
+  if (book !== undefined) {
     return {
       status: 'success',
       data: {
-        note
+        book
       }
     }
   }
@@ -58,13 +58,13 @@ const getNoteByIdHandler = (request, h) => {
   return response
 }
 
-const editNoteByIdHandler = (request, h) => {
+const editbookByIdHandler = (request, h) => {
   const { id } = request.params
 
   const { title, tags, body } = request.payload
   const updatedAt = new Date().toISOString()
 
-  const index = books.findIndex((note) => note.id === id)
+  const index = books.findIndex((book) => book.id === id)
 
   if (index !== -1) {
     books[index] = {
@@ -91,10 +91,10 @@ const editNoteByIdHandler = (request, h) => {
   return response
 }
 
-const deleteNoteByIdHandler = (request, h) => {
+const deletebookByIdHandler = (request, h) => {
   const { id } = request.params
 
-  const index = books.findIndex((note) => note.id === id)
+  const index = books.findIndex((book) => book.id === id)
 
   if (index !== -1) {
     books.splice(index, 1)
@@ -115,9 +115,9 @@ const deleteNoteByIdHandler = (request, h) => {
 }
 
 module.exports = {
-  addNoteHandler,
+  addbookHandler,
   getAllbooksHandler,
-  getNoteByIdHandler,
-  editNoteByIdHandler,
-  deleteNoteByIdHandler
+  getbookByIdHandler,
+  editbookByIdHandler,
+  deletebookByIdHandler
 }
