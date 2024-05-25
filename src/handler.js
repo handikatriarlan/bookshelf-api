@@ -65,17 +65,30 @@ const addBookHandler = (request, h) => {
   return response
 }
 
-const getAllBooksHandler = () => {
-  const booksSummary = books.map(book => ({
-    id: book.id,
-    name: book.name,
-    publisher: book.publisher
-  }))
+const getAllBooksHandler = (request, h) => {
+  const { name, reading, finished } = request.query
+
+  let filteredBooks = [...books]
+
+  if (name) {
+    const keyword = name.toLowerCase()
+    filteredBooks = filteredBooks.filter(book => book.name.toLowerCase().includes(keyword))
+  }
+
+  if (reading !== undefined) {
+    const isReading = reading === '1'
+    filteredBooks = filteredBooks.filter(book => book.reading === isReading)
+  }
+
+  if (finished !== undefined) {
+    const isFinished = finished === '1'
+    filteredBooks = filteredBooks.filter(book => book.finished === isFinished)
+  }
 
   return {
     status: 'success',
     data: {
-      books: booksSummary
+      books: filteredBooks
     }
   }
 }
