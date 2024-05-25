@@ -85,10 +85,12 @@ const getAllBooksHandler = (request, h) => {
     filteredBooks = filteredBooks.filter(book => book.finished === isFinished)
   }
 
+  const mainInfoBooks = filteredBooks.map(({ id, name, publisher }) => ({ id, name, publisher }))
+  
   return {
     status: 'success',
     data: {
-      books: filteredBooks
+      books: mainInfoBooks
     }
   }
 }
