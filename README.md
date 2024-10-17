@@ -1,6 +1,6 @@
 # Bookshelf API
 
-A back-end API for managing a bookshelf application built with Node.js and Hapi.js. This API provides endpoints to perform CRUD operations on bookshelf entries, allowing users to manage their collection of books.
+A back-end API for managing a bookshelf application built with Node.js and Hapi.js. This API provides endpoints to perform CRUD operations on bookshelf entries, allowing users to manage their collection of books. This Repository is submission project on Dicoding's 'Membuat Aplikasi Back-End untuk Pemula'.
 
 ## Features
 
